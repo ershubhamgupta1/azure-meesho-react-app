@@ -1,0 +1,50 @@
+name: CI/CD for React App
+
+# Triggers the workflow on push or pull request events
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+# Define jobs for the workflow
+jobs:
+  build:
+    # Define the environment where the job runs
+    runs-on: ubuntu-latest
+
+    # Steps to execute
+    steps:
+      # Step 1: Check out the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js environment
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Specify the Node.js version
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Run tests (optional, skip if no tests are available)
+      # - name: Run tests
+      #   run: npm test -- --watchAll=false
+
+      # Step 5: Build the project
+      - name: Build React app
+        run: npm run build
+
+      # Step 6: Deploy to GitHub Pages or another hosting service (optional)
+      - name: Deploy to Azure Static Web Apps
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          app_location: "/"
+          output_location: "build"
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
