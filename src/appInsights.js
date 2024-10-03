@@ -2,7 +2,7 @@ import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 
 const appInsights = new ApplicationInsights({
   config: {
-    instrumentationKey: process.env.REACT_APP_APPINSIGHTS_INSTRUMENTATIONKEY
+    instrumentationKey: '537dc1a1-6414-442f-b42b-de39545b83c8'
   }
 });
 
